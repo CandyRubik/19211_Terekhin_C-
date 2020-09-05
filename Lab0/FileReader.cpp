@@ -28,7 +28,7 @@ void FileReader::write(std::ofstream& fout)
 	//вывод 
 	fout.precision(2);
 	for (auto p : vec)
-		fout << p.first << ';' << p.second << ';' << (double)p.second * 100 / word_counter << '%' << std::endl;
+		fout << p.first << ',' << p.second << ',' << (double)p.second * 100 / word_counter << '%' << std::endl;
 }
 
 bool comp(const std::pair<std::string, int>& a, const std::pair<std::string, int>& b)
