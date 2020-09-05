@@ -21,3 +21,8 @@ Release
 *.vbproj.user
 ipch
 *sdf
+*.sln
+*.vcxproj
+*.vcxproj.user
+*.vcxproj.filters
+*.vs
