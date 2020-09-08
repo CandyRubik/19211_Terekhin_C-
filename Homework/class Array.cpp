@@ -41,7 +41,7 @@ public:
 
 	void push_back(int number) 
 	{
-		if (size_ == now_index + 1) {
+		if (size_ == now_index) {
 			resize(size_ * 2);
 		}
 		mem[now_index++] = number;
@@ -54,7 +54,7 @@ public:
 		}
 		Array a(10);
 		while (in >> mem[now_index++]) {
-			if (size_ == now_index + 1) {
+			if (size_ == now_index) {
 				resize(size_ * 2);
 			}
 		}
