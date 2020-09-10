@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-class Array {
+class Array { // class with std::copy/fill
 public:
 	explicit Array(size_t initial_allocated = 1) : size_(initial_allocated), mem(new int[size_]), now_index(0) 
 	{
