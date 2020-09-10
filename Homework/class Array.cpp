@@ -4,18 +4,12 @@ class Array {
 public:
 	explicit Array(size_t initial_allocated = 1) : size_(initial_allocated), mem(new int[size_]), now_index(0) 
 	{
-		for (int i = 0; i < size_; i++)
-		{
-			mem[i] = 0;
-		}
+		std::fill(mem, mem + size_, 0);
 	}
 
 	Array(Array const& a) : size_(a.size_), mem(new int[size_]), now_index(a.now_index)
 	{
-		for (int i = 0; i < size_; i++)
-		{
-			mem[i] = a.mem[i];
-		}
+		std::copy(a.mem, a.mem + size_, mem);
 	}
 
 	~Array()
@@ -65,8 +59,7 @@ public:
 	{
 		Array t(nsize);
 		size_t n = nsize > size_ ? size_ : nsize;
-		for (size_t i = 0; i < n; i++)
-			t.mem[i] = mem[i];
+		std::copy(mem, mem + n, t.mem);
 		swap(t);
 	}
 
