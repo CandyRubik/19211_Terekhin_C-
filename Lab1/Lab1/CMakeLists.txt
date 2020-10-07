@@ -1,11 +1,11 @@
 ﻿# CMakeList.txt: проект CMake для Lab1; включите исходный код и определения,
 # укажите здесь логику для конкретного проекта.
 #
-cmake_minimum_required (VERSION 3.17)
+cmake_minimum_required (VERSION 3.17)# минимальная версия cmake для сборки
 
-set(CMAKE_CXX_STANDARD 20)
-project ("Ternary_System")
-add_executable (Ternary_System "test.cpp" Trit_set.cpp)
+set(CMAKE_CXX_STANDARD 20)#стандарт cpp для компиляции
+project ("Ternary_System")#название проекта
+add_executable (Ternary_System "test.cpp" "Trit_set.cpp")
 ################################
 # GTest
 ################################
