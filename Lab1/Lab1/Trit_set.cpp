@@ -1,6 +1,6 @@
 #include "Trit_set.h"
 
-Trit_set::Trit_set(size_t capacity_) : capacity(capacity_), data(std::vector<uint>(ceil((double)capacity * 2 / sizeof(uint) / 8))), old_capacity(0) /*Default Ctor*/
+Trit_set::Trit_set(size_t capacity_) : capacity(capacity_), data(std::vector<uint>(ceil((double)capacity * 2 / sizeof(uint) / 8))), old_capacity(capacity) /*Default Ctor*/
 {
 	std::fill(std::begin(data), std::end(data), 0); // fill the array '0'
 }
@@ -141,7 +141,10 @@ Trit_value Trit_set::Trit::operator|(Trit_value second) // binary '|' operation
 Trit_value Trit_set::Trit::get_value() // get value for printing
 {
 	if (!is_initialized)
+	{
+		obj->resize(obj->old_capacity);
 		return Trit_value::UNKNOWN;
+	}
 	uint value = 3;
 	value &= Trit_block >> ((index_in_block) * 2); // get value from block of 16 trits 
 	switch (value)
