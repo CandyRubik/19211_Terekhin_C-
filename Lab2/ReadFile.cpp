@@ -1,19 +1,19 @@
 #pragma once
 #include "ReadFile.h"
-#include "Factory.h"
 #include "Workflow.h"
+#include "Factory.h"
 #include <string>
 
 Workflow* createReadFile() {
 	return new ReadFile;
 }
 
-static bool add_creator()
+static bool add_creatorReadFile()
 {
 	Factory<Workflow, std::string, Workflow* (*)()>::getInstance()->addCreator("readfile", createReadFile);
 	return true;
 }
-static bool a = add_creator();
+static bool a = add_creatorReadFile();
 
 void ReadFile::execute(std::vector<std::string> args)
 {

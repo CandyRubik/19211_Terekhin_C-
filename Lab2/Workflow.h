@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 
 class Workflow
 {
@@ -10,3 +11,5 @@ public:
 	virtual ~Workflow() {};
 };
 typedef Workflow* (*creator_t) ();
+
+//std::string Workflow::input_text = "";
