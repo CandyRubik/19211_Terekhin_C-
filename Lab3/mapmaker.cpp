@@ -10,16 +10,15 @@ mapMaker::mapMaker(QWidget *parent) :
     ui(new Ui::mapMaker)
 {
     ui->setupUi(this);
-    QBrush brush;
-    this->setFixedSize (400, 320);
+    this->setFixedSize (303, 350);
     QGraphicsView *emptyMap = new QGraphicsView(this);
     QGraphicsScene *map = new QGraphicsScene(this);
     map->setSceneRect(0 , 0, 301, 301);
     emptyMap->setScene(map);
+
     for (int i = 0; i < 10; i++)
         for(int j = 0; j < 10; j++)
-            map->addRect(i * 30, j * 30, 30, 30);
-
+            array.append(map->addRect(i * 30, j * 30, 30, 30));
 }
 
 mapMaker::~mapMaker()

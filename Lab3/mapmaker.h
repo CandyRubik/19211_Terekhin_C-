@@ -2,6 +2,8 @@
 #define MAPMAKER_H
 
 #include <QDialog>
+#include <QVector>
+#include <QGraphicsScene>
 
 namespace Ui {
 class mapMaker;
@@ -17,6 +19,7 @@ public:
 
 private:
     Ui::mapMaker *ui;
+    QVector<QGraphicsRectItem *> array;
 };
 
 #endif // MAPMAKER_H
