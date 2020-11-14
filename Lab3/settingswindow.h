@@ -23,6 +23,10 @@ private slots:
 
     void on_chooseStrategyS_textActivated(const QString &arg1);
 
+    void on_SetMapF_clicked();
+
+    void on_SetMapS_clicked();
+
 private:
     Ui::SettingsWindow *ui;
 };

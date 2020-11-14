@@ -1,6 +1,7 @@
 #include "settingswindow.h"
 #include "ui_settingswindow.h"
 #include "mainwindow.h"
+#include "mapmaker.h"
 
 SettingsWindow::SettingsWindow(QWidget *parent) :
     QDialog(parent),
@@ -43,4 +44,20 @@ void SettingsWindow::on_chooseStrategyS_textActivated(const QString &arg2)
     {
         ui->SetMapS->setEnabled(false);
     }
+}
+
+void SettingsWindow::on_SetMapF_clicked()
+{
+    mapMaker map;
+    map.setModal(true);
+    map.setWindowTitle("Настройка карты игрока 1");
+    map.exec();
+}
+
+void SettingsWindow::on_SetMapS_clicked()
+{
+    mapMaker map;
+    map.setModal(true);
+    map.setWindowTitle("Настройка карты игрока 2");
+    map.exec();
 }

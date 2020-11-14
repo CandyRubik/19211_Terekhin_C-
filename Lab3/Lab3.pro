@@ -11,14 +11,17 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    mapmaker.cpp \
     settingswindow.cpp
 
 HEADERS += \
     mainwindow.h \
+    mapmaker.h \
     settingswindow.h
 
 FORMS += \
     mainwindow.ui \
+    mapmaker.ui \
     settingswindow.ui
 
 # Default rules for deployment.
