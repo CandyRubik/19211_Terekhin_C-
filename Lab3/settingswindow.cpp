@@ -48,16 +48,14 @@ void SettingsWindow::on_chooseStrategyS_textActivated(const QString &arg2)
 
 void SettingsWindow::on_SetMapF_clicked()
 {
-    mapMaker map;
-    map.setModal(true);
-    map.setWindowTitle("Настройка карты игрока 1");
-    map.exec();
+    mapMaker *map = new mapMaker(this);
+    map->setWindowTitle("Настройка карты игрока 1");
+    map->show();
 }
 
 void SettingsWindow::on_SetMapS_clicked()
 {
-    mapMaker map;
-    map.setModal(true);
-    map.setWindowTitle("Настройка карты игрока 2");
-    map.exec();
+    mapMaker *map = new mapMaker(this);
+    map->setWindowTitle("Настройка карты игрока 2");
+    map->show();
 }

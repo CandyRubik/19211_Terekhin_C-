@@ -1,6 +1,6 @@
 #include "mapmaker.h"
 #include "ui_mapmaker.h"
-#include <QGraphicsView>
+#include "mapwidget.h"
 #include <QPen>
 #include <QBrush>
 
@@ -11,15 +11,14 @@ mapMaker::mapMaker(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setFixedSize (303, 350);
-    QGraphicsView *emptyMap = new QGraphicsView(this);
-    QGraphicsScene *map = new QGraphicsScene(this);
-    map->setSceneRect(0 , 0, 301, 301);
-    emptyMap->setScene(map);
+    mapWidget *map = new mapWidget(this);
+    map->setScene(&map->map_scene);
+    QPainter painter(this);
+    map->drawBackground(&painter, QRectF(0, 0, 301, 301));
+    //  QPainter --- mouse press event (QGraphicsScene)
 
-    for (int i = 0; i < 10; i++)
-        for(int j = 0; j < 10; j++)
-            array.append(map->addRect(i * 30, j * 30, 30, 30));
 }
+
 
 mapMaker::~mapMaker()
 {

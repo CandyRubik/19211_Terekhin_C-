@@ -12,11 +12,13 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     mapmaker.cpp \
+    mapwidget.cpp \
     settingswindow.cpp
 
 HEADERS += \
     mainwindow.h \
     mapmaker.h \
+    mapwidget.h \
     settingswindow.h
 
 FORMS += \
