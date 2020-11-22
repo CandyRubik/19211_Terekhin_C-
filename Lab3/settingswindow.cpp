@@ -2,6 +2,7 @@
 #include "ui_settingswindow.h"
 #include "mainwindow.h"
 #include "mapmaker.h"
+#include <QFile>
 
 SettingsWindow::SettingsWindow(QWidget *parent) :
     QDialog(parent),
@@ -19,6 +20,16 @@ SettingsWindow::~SettingsWindow()
 
 void SettingsWindow::on_goToMainWindow_clicked()
 {
+    QFile file1("D:\\LabsC++\\Lab3\\info\\MapF.txt");
+    if (file1.open(QIODevice::Append)) {
+        file1.write(ui->chooseStrategyF->currentText().toStdString().c_str());
+    }
+    file1.close();
+    QFile file2("D:\\LabsC++\\Lab3\\info\\MapS.txt");
+    if (file2.open(QIODevice::Append)) {
+        file2.write(ui->chooseStrategyS->currentText().toStdString().c_str());
+    }
+    file2.close();
     this->close();
 }
 
