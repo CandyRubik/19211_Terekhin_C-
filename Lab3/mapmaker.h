@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <QGraphicsScene>
-#include "mapwidget.h"
+#include "mapmakerwidget.h"
 
 namespace Ui {
 class mapMaker;

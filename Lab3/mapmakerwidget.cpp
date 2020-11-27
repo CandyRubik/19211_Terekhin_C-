@@ -1,4 +1,4 @@
-#include "mapwidget.h"
+#include "mapmakerwidget.h"
 #include <QPainter>
 #include <QMouseEvent>
 #include <QMessageBox>
@@ -8,9 +8,9 @@
 
 mapWidget::mapWidget(QWidget *parent) : QWidget(parent)
 {
-    this->setMouseTracking(true);
+    setMouseTracking(true);
     setFocusPolicy(Qt::StrongFocus);
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 11; i++)
     {
         ships_status.push_back(std::make_pair(std::make_pair(QPoint(), ""), false));
     }
@@ -41,7 +41,7 @@ int mapWidget::getShipSize(std::vector<std::pair<std::pair<QPoint, std::string>,
             return 2;
             break;
         case 6:
-            return 1;
+            return 2;
             break;
         case 7:
             return 1;
@@ -52,6 +52,11 @@ int mapWidget::getShipSize(std::vector<std::pair<std::pair<QPoint, std::string>,
         case 9:
             return 1;
             break;
+        case 10:
+            return 1;
+            break;
+        default:
+            return 0;
     }
 }
 
@@ -64,20 +69,20 @@ bool mapWidget::restrictedAreaCheck(std::vector<std::pair<std::pair<QPoint, std:
         if(cntrl) // if verifiable ship is horizontal
         {
             if( (it->first.second == "vertical") &&
-                (   ((it->first.first.x() - 1 <= cursor_pos.first) && (it->first.first.y() - 1 <= cursor_pos.second) &&
-                    (it->first.first.x() + 1 >= cursor_pos.first) && (it->first.first.y() + ship_size >= cursor_pos.second)) ||
+                (   ((it->first.first.x() - 1 <= cursorPos.first) && (it->first.first.y() - 1 <= cursorPos.second) &&
+                    (it->first.first.x() + 1 >= cursorPos.first) && (it->first.first.y() + ship_size >= cursorPos.second)) ||
 
-                    ((it->first.first.x() - 1 <= cursor_pos.first + ship_size_verifiable) && (it->first.first.y() - 1 <= cursor_pos.second) &&
-                    (it->first.first.x() + 1 >= cursor_pos.first + ship_size_verifiable) && (it->first.first.y() + ship_size >= cursor_pos.second))))
+                    ((it->first.first.x() - 1 <= cursorPos.first + ship_size_verifiable) && (it->first.first.y() - 1 <= cursorPos.second) &&
+                    (it->first.first.x() + 1 >= cursorPos.first + ship_size_verifiable) && (it->first.first.y() + ship_size >= cursorPos.second))))
             {
                 return true;
             }
             if( (it->first.second == "horizontal") &&
-                (   ((it->first.first.x() - 1 <= cursor_pos.first) && (it->first.first.y() - 1 <= cursor_pos.second) &&
-                    (it->first.first.x() + ship_size >= cursor_pos.first) && (it->first.first.y() + 1 >= cursor_pos.second)) ||
+                (   ((it->first.first.x() - 1 <= cursorPos.first) && (it->first.first.y() - 1 <= cursorPos.second) &&
+                    (it->first.first.x() + ship_size >= cursorPos.first) && (it->first.first.y() + 1 >= cursorPos.second)) ||
 
-                    ((it->first.first.x() - 1 <= cursor_pos.first + ship_size_verifiable) && (it->first.first.y() - 1 <= cursor_pos.second) &&
-                    (it->first.first.x() + ship_size >= cursor_pos.first + ship_size_verifiable) && (it->first.first.y() + 1 >= cursor_pos.second))))
+                    ((it->first.first.x() - 1 <= cursorPos.first + ship_size_verifiable) && (it->first.first.y() - 1 <= cursorPos.second) &&
+                    (it->first.first.x() + ship_size >= cursorPos.first + ship_size_verifiable) && (it->first.first.y() + 1 >= cursorPos.second))))
             {
                 return true;
             }
@@ -85,20 +90,20 @@ bool mapWidget::restrictedAreaCheck(std::vector<std::pair<std::pair<QPoint, std:
         else // if verifiable ship is vertical
         {
             if( (it->first.second == "vertical") &&
-                (    ((it->first.first.x() - 1 <= cursor_pos.first) && (it->first.first.y() - 1 <= cursor_pos.second) &&
-                    (it->first.first.x() + 1 >= cursor_pos.first) && (it->first.first.y() + ship_size >= cursor_pos.second)) ||
+                (    ((it->first.first.x() - 1 <= cursorPos.first) && (it->first.first.y() - 1 <= cursorPos.second) &&
+                    (it->first.first.x() + 1 >= cursorPos.first) && (it->first.first.y() + ship_size >= cursorPos.second)) ||
 
-                     ((it->first.first.x() - 1 <= cursor_pos.first) && (it->first.first.y() - 1 <= cursor_pos.second + ship_size_verifiable) &&
-                     (it->first.first.x() + 1 >= cursor_pos.first) && (it->first.first.y() + ship_size >= cursor_pos.second + ship_size_verifiable))))
+                     ((it->first.first.x() - 1 <= cursorPos.first) && (it->first.first.y() - 1 <= cursorPos.second + ship_size_verifiable) &&
+                     (it->first.first.x() + 1 >= cursorPos.first) && (it->first.first.y() + ship_size >= cursorPos.second + ship_size_verifiable))))
             {
                 return true;
             }
             if( (it->first.second == "horizontal") &&
-                (    ((it->first.first.x() - 1 <= cursor_pos.first) && (it->first.first.y() - 1 <= cursor_pos.second) &&
-                    (it->first.first.x() + ship_size >= cursor_pos.first) && (it->first.first.y() + 1 >= cursor_pos.second)) ||
+                (    ((it->first.first.x() - 1 <= cursorPos.first) && (it->first.first.y() - 1 <= cursorPos.second) &&
+                    (it->first.first.x() + ship_size >= cursorPos.first) && (it->first.first.y() + 1 >= cursorPos.second)) ||
 
-                     ((it->first.first.x() - 1 <= cursor_pos.first) && (it->first.first.y() - 1 <= cursor_pos.second + ship_size_verifiable) &&
-                     (it->first.first.x() + ship_size >= cursor_pos.first) && (it->first.first.y() + 1 >= cursor_pos.second + ship_size_verifiable))))
+                     ((it->first.first.x() - 1 <= cursorPos.first) && (it->first.first.y() - 1 <= cursorPos.second + ship_size_verifiable) &&
+                     (it->first.first.x() + ship_size >= cursorPos.first) && (it->first.first.y() + 1 >= cursorPos.second + ship_size_verifiable))))
             {
                 return true;
             }
@@ -107,17 +112,7 @@ bool mapWidget::restrictedAreaCheck(std::vector<std::pair<std::pair<QPoint, std:
     return false;
 }
 
-void mapWidget::drawBackground(QPainter *painter, const QRectF &rect)
-{
-    Q_UNUSED(rect);
-    painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
-    painter->setBrush(QBrush(Qt::white, Qt::SolidPattern));
-    for (int i = 0; i < 10; i++)
-        for(int j = 0; j < 10; j++)
-            painter->drawRect(i * Sizes::map_square_side, j * Sizes::map_square_side, Sizes::map_square_side, Sizes::map_square_side);
-}
-
-void mapWidget::paintEvent(QPaintEvent *)
+void mapWidget::drawField()
 {
     QPainter painter(this);
     painter.setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
@@ -125,119 +120,115 @@ void mapWidget::paintEvent(QPaintEvent *)
     for (int i = 0; i < 10; i++)
         for(int j = 0; j < 10; j++)
             painter.drawRect(i * Sizes::map_square_side, j * Sizes::map_square_side, Sizes::map_square_side, Sizes::map_square_side);
+}
+
+void mapWidget::drawStableShip(std::vector<std::pair<std::pair<QPoint, std::string>, bool>>::iterator it)
+{
     QPainter shipPainter(this);
     shipPainter.setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
     shipPainter.setBrush(QBrush(Qt::red, Qt::SolidPattern));
+    int ship_size = getShipSize(it);
+    if(it->first.second == "vertical")  // ship should be drawn vertical
+    {
+        for(int i = 0; i < ship_size; i++)
+        {
+            shipPainter.drawRect(it->first.first.x() * Sizes::map_square_side, (it->first.first.y() + i) * Sizes::map_square_side, Sizes::map_square_side, Sizes::map_square_side);
+        }
+    }
+    else    // ship should be drawn horizontal
+    {
+        for(int i = 0; i < ship_size; i++)
+        {
+            shipPainter.drawRect((it->first.first.x() + i) * Sizes::map_square_side, it->first.first.y() * Sizes::map_square_side, Sizes::map_square_side, Sizes::map_square_side);
+        }
+    }
+}
+
+void mapWidget::drawUnstableShip(std::vector<std::pair<std::pair<QPoint, std::string>, bool>>::iterator it)
+{
+    QPainter shipPainter(this);
+    shipPainter.setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
+    shipPainter.setBrush(QBrush(Qt::red, Qt::SolidPattern));
+    int ship_size = getShipSize(it);
+    if(cntrl)  // ship should be drawn vertical
+    {
+        for(int i = 0; i < ship_size; i++)
+        {
+            shipPainter.drawRect((cursorPos.first + i) * Sizes::map_square_side, cursorPos.second * Sizes::map_square_side, Sizes::map_square_side, Sizes::map_square_side);
+        }
+    }
+    else    // ship should be drawn horizontal
+    {
+        for(int i = 0; i < ship_size; i++)
+        {
+            shipPainter.drawRect(cursorPos.first * Sizes::map_square_side, (cursorPos.second + i) * Sizes::map_square_side, Sizes::map_square_side, Sizes::map_square_side);
+        }
+    }
+}
+
+void mapWidget::addShipToFlotilla(std::vector<std::pair<std::pair<QPoint, std::string>, bool>>::iterator it, std::string pos)
+{
+    int ship_size = getShipSize(it);
+    it->second = true;
+    it->first.first = QPoint(cursorPos.first, cursorPos.second);
+    it->first.second = pos;
+    if(pos == "horizontal")
+    {
+        for(qreal j = cursorPos.first + (11 * cursorPos.second); j < cursorPos.first + (11 * cursorPos.second) + ship_size; j++)
+        {
+            flotilla[(int)j] = '*';
+        }
+    }
+    else
+    {
+        for(qreal j = cursorPos.first + (11 * cursorPos.second); j < cursorPos.first + (11 * cursorPos.second) + (11* ship_size); j+=11)
+        {
+            flotilla[(int)j] = '*';
+        }
+    }
+}
+
+void mapWidget::paintEvent(QPaintEvent *)
+{
+    drawField();
+    // start painting ships
     for(auto it = ships_status.begin(); it != ships_status.end(); ++it)
     {
-        int ship_size = getShipSize(it);
         if(it->second) // if ship is on map => paint him
         {
-            if(it->first.second == "vertical")  // ship should be drawn vertical
-            {
-                for(int i = 0; i < ship_size; i++)
-                {
-                    shipPainter.drawRect(it->first.first.x() * Sizes::map_square_side, (it->first.first.y() + i) * Sizes::map_square_side, Sizes::map_square_side, Sizes::map_square_side);
-                }
-            }
-            else    // ship should be drawn horizontal
-            {
-                for(int i = 0; i < ship_size; i++)
-                {
-                    shipPainter.drawRect((it->first.first.x() + i) * Sizes::map_square_side, it->first.first.y() * Sizes::map_square_side, Sizes::map_square_side, Sizes::map_square_side);
-                }
-            }
+            drawStableShip(it);
         }
         else
         {
-            switch(std::distance(ships_status.begin(), it)) // getting index of vector and depends of them we install ship_size
-            {
-                case 0:
-                    ship_size = 4;
-                    break;
-                case 1:
-                    ship_size = 3;
-                    break;
-                case 2:
-                    ship_size = 3;
-                    break;
-                case 3:
-                    ship_size = 2;
-                    break;
-                case 4:
-                    ship_size = 2;
-                    break;
-                case 5:
-                    ship_size = 2;
-                    break;
-                case 6:
-                    ship_size = 1;
-                    break;
-                case 7:
-                    ship_size = 1;
-                    break;
-                case 8:
-                    ship_size = 1;
-                    break;
-                case 9:
-                    ship_size = 1;
-                    break;
-            }
             if(pressEvent)
             {
                 if(cntrl)   // if cntrl pressed
                 {
-                    if(cursor_pos.first > (10 - ship_size) || restrictedAreaCheck(it))
+                    if(cursorPos.first > (10 - getShipSize(it)) || restrictedAreaCheck(it)) // if click in unacceptable place
                     {
-                        QMessageBox::warning(this, "Внимание", "Ваш корабль не может быть размещен на поле таким образом, попробуйте разместить его по-другому");
+                        QMessageBox::warning(this, "Warning", "Your ship cannot be placed on the board this way, try placing it differently");
                     }
                     else
                     {
-                        it->second = true;
-                        it->first.first = QPoint(cursor_pos.first, cursor_pos.second);
-                        it->first.second = "horizontal";
-                        for(qreal j = cursor_pos.first + (11 * cursor_pos.second); j < cursor_pos.first + (11 * cursor_pos.second) + ship_size; j++)
-                        {
-                            flotilla[(int)j] = '*';
-                        }
+                        addShipToFlotilla(it, "horizontal");
                     }
                 }
                 else    // if cntrl !pressed
                 {
-                    if(cursor_pos.second > (10 - ship_size) || restrictedAreaCheck(it))
+                    if(cursorPos.second > (10 - getShipSize(it)) || restrictedAreaCheck(it)) // if click in unacceptable place
                     {
-                        QMessageBox::warning(this, "Внимание", "Ваш корабль не может быть размещен на поле таким образом, попробуйте разместить его по-другому");
+                        QMessageBox::warning(this, "Warning", "Your ship cannot be placed on the board this way, try placing it differently");
                     }
                     else
                     {
-                        it->second = true;
-                        it->first.first = QPoint(cursor_pos.first, cursor_pos.second);
-                        it->first.second = "vertical";
-                        for(qreal j = cursor_pos.first + (11 * cursor_pos.second); j < cursor_pos.first + (11 * cursor_pos.second) + (11* ship_size); j+=11)
-                        {
-                            flotilla[(int)j] = '*';
-                        }
+                        addShipToFlotilla(it, "vertical");
                     }
                 }
                 pressEvent = false;
             }
-
             if(moveEvent)
             {
-                if(cntrl) // if cntrl pressed
-                {
-                    for(int i = 0; i < ship_size; i++)
-                    {
-                        shipPainter.drawRect((cursor_pos.first + i) * Sizes::map_square_side, cursor_pos.second * Sizes::map_square_side, Sizes::map_square_side, Sizes::map_square_side);
-                    }
-                }
-                else
-                {
-                    for(int i = 0; i < ship_size; i++)
-                    {
-                        shipPainter.drawRect(cursor_pos.first * Sizes::map_square_side, (cursor_pos.second + i) * Sizes::map_square_side, Sizes::map_square_side, Sizes::map_square_side);
-                    }
-                }
+                drawUnstableShip(it);
                 moveEvent = false;
             }
             break;
@@ -248,18 +239,14 @@ void mapWidget::paintEvent(QPaintEvent *)
 void mapWidget::mouseMoveEvent(QMouseEvent *mouseEvent)
 {
     moveEvent = true;
-    cursor_pos = std::make_pair(floor(mouseEvent->pos().x() / Sizes::map_square_side), floor(mouseEvent->pos().y() / Sizes::map_square_side));
-    /*QGraphicsRectItem * Rect = map_scene.addRect(Rectx * Sizes::map_square_side , Recty * Sizes::map_square_side, Sizes::map_square_side, Sizes::map_square_side,
-            QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap), QBrush(Qt::red, Qt::SolidPattern));*/
+    cursorPos = std::make_pair(floor(mouseEvent->pos().x() / Sizes::map_square_side), floor(mouseEvent->pos().y() / Sizes::map_square_side));
     QWidget::update();
 }
 
 void mapWidget::mousePressEvent(QMouseEvent *mouseEvent)
 {
     pressEvent = true;
-    cursor_pos = std::make_pair(floor(mouseEvent->pos().x() / Sizes::map_square_side), floor(mouseEvent->pos().y() / Sizes::map_square_side));
-    /*QGraphicsRectItem * Rect = map_scene.addRect(Rectx * Sizes::map_square_side , Recty * Sizes::map_square_side, Sizes::map_square_side, Sizes::map_square_side,
-            QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap), QBrush(Qt::red, Qt::SolidPattern));*/
+    cursorPos = std::make_pair(floor(mouseEvent->pos().x() / Sizes::map_square_side), floor(mouseEvent->pos().y() / Sizes::map_square_side));
     QWidget::update();
 }
 

@@ -105,7 +105,7 @@
         <bool>false</bool>
        </property>
        <property name="text">
-        <string>Второй игрок</string>
+        <string>Second Gamer</string>
        </property>
       </widget>
      </item>
@@ -124,7 +124,7 @@
         <enum>Qt::LeftToRight</enum>
        </property>
        <property name="text">
-        <string>Настроить карту второго игрока</string>
+        <string>Customize Second Player map</string>
        </property>
       </widget>
      </item>
@@ -140,7 +140,7 @@
         <enum>Qt::LeftToRight</enum>
        </property>
        <property name="text">
-        <string>Первый игрок</string>
+        <string>First Gamer</string>
        </property>
       </widget>
      </item>
@@ -173,17 +173,17 @@
        </property>
        <item>
         <property name="text">
-         <string>Случайная стратегия</string>
+         <string>Random strategy</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Пользователь</string>
+         <string>User</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Оптимальная стратегия</string>
+         <string>Optimal strategy</string>
         </property>
        </item>
       </widget>
@@ -219,7 +219,7 @@
         <enum>Qt::LeftToRight</enum>
        </property>
        <property name="text">
-        <string>Настроить карту первого игрока</string>
+        <string>Customize First Player map</string>
        </property>
       </widget>
      </item>
@@ -236,17 +236,17 @@
        </property>
        <item>
         <property name="text">
-         <string>Случайная стратегия</string>
+         <string>Random strategy</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Пользователь</string>
+         <string>User</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Оптимальная стратегия</string>
+         <string>Optimal strategy</string>
         </property>
        </item>
       </widget>

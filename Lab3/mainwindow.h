@@ -19,9 +19,9 @@ private slots:
 
     void on_Settings_clicked();
 
-    void resizeEvent(QResizeEvent *evt);
-
     void keyPressEvent(QKeyEvent *evt);
+
+    void on_Game_clicked();
 
 private:
     Ui::MainWindow *ui;
