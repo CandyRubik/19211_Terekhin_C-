@@ -6,6 +6,8 @@
 #include <vector>
 #include <fstream>
 
+class Game;
+
 class GamerRandom : public GamerI
 {
     std::vector<std::string> field;
@@ -16,7 +18,7 @@ class GamerRandom : public GamerI
 public:
     GamerRandom(std::ifstream &file);
 
-    virtual std::pair<int, int> makeMove(Game& game) override;
+    virtual std::pair<int, int> makeMove() override;
 
     virtual ~GamerRandom();
 

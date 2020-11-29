@@ -1,4 +1,6 @@
 #include "settingswindow.h"
+#include <QDebug>
+#include <iostream>
 #include "ui_settingswindow.h"
 #include "mainwindow.h"
 #include "mapmaker.h"
@@ -22,7 +24,6 @@ SettingsWindow::~SettingsWindow()
 
 void SettingsWindow::on_goToMainWindow_clicked()
 {
-   // QFile file1("D:/LabsC++/Lab3/info/MapF.txt");
     QFile file1(QDir::currentPath() + "/info/MapF.txt");
     if (file1.open(QIODevice::ReadOnly)) {
         QStringList strList;
@@ -43,7 +44,6 @@ void SettingsWindow::on_goToMainWindow_clicked()
         file1.close();
     }
 
-    //QFile file2("D:/LabsC++/Lab3/info/MapS.txt");
     QFile file2(QDir::currentPath() + "/info/MapS.txt");
     if (file2.open(QIODevice::ReadOnly)) {
         QStringList strList;

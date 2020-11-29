@@ -2,15 +2,13 @@
 #define GAMERI_H
 
 #include <vector>
-#include "game.h"
 #include <string>
 
-class Game;
 
 class GamerI
 {
 public:
-    virtual std::pair<int, int> makeMove(Game& game) = 0;
+    virtual std::pair<int, int> makeMove() = 0;
 
     virtual std::vector<std::string>& getField() = 0;
 

@@ -1,4 +1,4 @@
-#include "gameroptimal.h"
+#include "game.h"
 
 GamerOptimal::GamerOptimal(std::ifstream &file) : GamerI()
 {
@@ -13,17 +13,17 @@ GamerOptimal::GamerOptimal(std::ifstream &file) : GamerI()
 
 GamerOptimal::~GamerOptimal() {}
 
-std::pair<int, int> GamerOptimal::makeMove(Game &game)
+std::pair<int, int> GamerOptimal::makeMove()
 {
     if(!generated)
     {
-        if(game.getNextSecond())
+        if(Game::instance().getNextSecond())
         {
-            enemyField = game.getSecondGamer()->getField();
+            enemyField = Game::instance().getSecondGamer()->getField();
         }
         else
         {
-            enemyField = game.getFirstGamer()->getField();
+            enemyField = Game::instance().getFirstGamer()->getField();
         }
         if(!battleshipKillingStatus && !battleshipKillConfirmation(enemyField)) // if the battleship is not killed
         {

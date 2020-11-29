@@ -2,10 +2,10 @@
 #define GAMERUSER_H
 
 #include "gameri.h"
-#include "game.h"
 #include <string>
 #include <vector>
 #include <fstream>
+
 
 class GamerUser : public GamerI
 {
@@ -14,7 +14,7 @@ class GamerUser : public GamerI
 public:
     GamerUser(std::ifstream &file);
 
-    virtual std::pair<int, int> makeMove(Game& game) override;
+    virtual std::pair<int, int> makeMove() override;
 
     virtual ~GamerUser();
 

@@ -6,6 +6,8 @@
 #include <vector>
 #include <fstream>
 
+class Game;
+
 class GamerOptimal : public GamerI
 {
     std::vector<std::string> field;
@@ -20,7 +22,7 @@ class GamerOptimal : public GamerI
 public:
     GamerOptimal(std::ifstream &file);
 
-    virtual std::pair<int, int> makeMove(Game& game) override;
+    virtual std::pair<int, int> makeMove() override;
 
     virtual ~GamerOptimal();
 

@@ -1,9 +1,11 @@
 #ifndef GAME_H
 #define GAME_H
 #include "gameri.h"
+#include "gameruser.h"
+#include "gameroptimal.h"
+#include "gamerrandom.h"
 #include <memory>
 
-class GamerI;
 
 class Game
 {
@@ -14,15 +16,18 @@ class Game
     bool secondUserStatus = false;
     std::pair<bool, std::pair<int, int>> userShot = {false, {0, 0}};
 public:
-    Game();
+
+    static Game& instance()
+    {
+        static Game game;
+        return game;
+    }
 
     ~Game();
 
-    Game(Game &&rr);
-
     void switchNextSecond();
 
-    bool getNextSecond();
+    bool getNextSecond() const;
 
     GamerI* getFirstGamer();
 
@@ -30,11 +35,19 @@ public:
 
     void setUserShot(std::pair<bool, std::pair<int, int>> p);
 
-    bool move();
+    void move();
 
-    bool getGamerUserStatus(int x);
+    bool getGamerUserStatus(int x) const;
 
-    friend class GamerUser;
+    friend std::pair<int, int> GamerUser::makeMove();
+    friend std::pair<int, int> GamerOptimal::makeMove();
+    friend std::pair<int, int> GamerRandom::makeMove();
+private:
+    explicit Game();
+
+    Game(Game const&);
+
+    Game& operator=(Game const&);
 };
 
 #endif // GAME_H

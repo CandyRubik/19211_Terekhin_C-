@@ -1,4 +1,4 @@
-#include "gamerrandom.h"
+#include "game.h"
 
 GamerRandom::GamerRandom(std::ifstream &file)
 {
@@ -13,17 +13,17 @@ GamerRandom::GamerRandom(std::ifstream &file)
 
 GamerRandom::~GamerRandom() {}
 
-std::pair<int, int> GamerRandom::makeMove(Game &game)
+std::pair<int, int> GamerRandom::makeMove()
 {
     if(!generated)
     {
-        if(game.getNextSecond())
+        if(Game::instance().getNextSecond())
         {
-            enemyField = game.getSecondGamer()->getField();
+            enemyField = Game::instance().getSecondGamer()->getField();
         }
         else
         {
-            enemyField = game.getFirstGamer()->getField();
+            enemyField = Game::instance().getFirstGamer()->getField();
         }
         while(true)
         {

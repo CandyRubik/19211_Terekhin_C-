@@ -1,5 +1,3 @@
-#include "gameruser.h"
-#include "gameri.h"
 #include "game.h"
 
 GamerUser::GamerUser(std::ifstream &file) : GamerI()
@@ -11,9 +9,9 @@ GamerUser::GamerUser(std::ifstream &file) : GamerI()
         field.push_back(str + '\n');
     }
 }
-std::pair<int, int> GamerUser::makeMove(Game& game)
+std::pair<int, int> GamerUser::makeMove()
 {
-    return game.userShot.second;
+    return Game::instance().userShot.second;
 }
 
 GamerUser::~GamerUser() {}

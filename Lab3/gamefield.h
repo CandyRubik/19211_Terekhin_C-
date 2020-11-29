@@ -11,7 +11,7 @@ class GameField : public QWidget
     Q_OBJECT
     bool moveEvent = false;
     std::pair<qreal, qreal> cursorPos = std::make_pair(0, 0);
-    std::unique_ptr<Game> GameP;
+    Game& GameR;
 public:
     explicit GameField(QWidget *parent = nullptr);
 

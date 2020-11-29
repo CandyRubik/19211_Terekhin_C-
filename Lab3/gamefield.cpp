@@ -14,11 +14,10 @@ namespace Sizes {
     constexpr qreal kMapSquareSide = 30;
 }
 
-GameField::GameField(QWidget *parent) : QWidget(parent)
+GameField::GameField(QWidget *parent) : QWidget(parent), GameR(Game::instance())
 {
     setMouseTracking(true);
     setMinimumSize(1280, 720);
-    GameP = std::make_unique<Game>();
 }
 
 GameField::~GameField() {}
@@ -26,23 +25,11 @@ GameField::~GameField() {}
 void GameField::paintEvent(QPaintEvent *)
 {
     drawFields();
-    if(GameP->getNextSecond() && !GameP->getGamerUserStatus(1))
-    {
-        std::pair<int, int> shotPos = GameP->getFirstGamer()->makeMove(*GameP);
-        QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonPress, QPoint(shotPos.first, shotPos.second), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-        mousePressEvent(event);
-    }
-    else if(!GameP->getGamerUserStatus(2) && !GameP->getNextSecond())
-    {
-        std::pair<int, int> shotPos = GameP->getSecondGamer()->makeMove(*GameP);
-        QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonPress, QPoint(shotPos.first, shotPos.second), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-        mousePressEvent(event);
-    }
     if(moveEvent)
     {
         drawAim();
     }
-    if(GameP->getNextSecond())
+    if(GameR.getNextSecond())
     {
         drawFirstGField();
         drawEnemyField();
@@ -52,19 +39,30 @@ void GameField::paintEvent(QPaintEvent *)
         drawSecondGField();
         drawEnemyField();
     }
-
+    if(GameR.getNextSecond() && !GameR.getGamerUserStatus(1))
+    {
+        std::pair<int, int> shotPos = GameR.getFirstGamer()->makeMove();
+        QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonPress, QPoint(shotPos.first, shotPos.second), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+        mousePressEvent(event);
+    }
+    else if(!GameR.getGamerUserStatus(2) && !GameR.getNextSecond())
+    {
+        std::pair<int, int> shotPos = GameR.getSecondGamer()->makeMove();
+        QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonPress, QPoint(shotPos.first, shotPos.second), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+        mousePressEvent(event);
+    }
 }
 
 void GameField::drawEnemyField()
 {
     std::vector<std::string> field;
-    if(GameP->getNextSecond())
+    if(GameR.getNextSecond())
     {
-        field = GameP->getSecondGamer()->getField();
+        field = GameR.getSecondGamer()->getField();
     }
     else
     {
-        field = GameP->getFirstGamer()->getField();
+        field = GameR.getFirstGamer()->getField();
     }
 
     for(int i = 0; i < 10; i++)
@@ -103,7 +101,7 @@ void GameField::drawAim()
 
 void GameField::drawFirstGField()
 {
-    std::vector<std::string> field = GameP->getFirstGamer()->getField();
+    std::vector<std::string> field = GameR.getFirstGamer()->getField();
     for(int i = 0; i < 10; i++)
     {
         for(int j = 0; j < 10; j++)
@@ -134,7 +132,7 @@ void GameField::drawFirstGField()
 
 void GameField::drawSecondGField()
 {
-    std::vector<std::string> field = GameP->getSecondGamer()->getField();
+    std::vector<std::string> field = GameR.getSecondGamer()->getField();
     for(int i = 0; i < 10; i++)
     {
         for(int j = 0; j < 10; j++)
@@ -196,22 +194,23 @@ void GameField::mousePressEvent(QMouseEvent *mouseEvent)
     if(cursorPos.first >= kSecondFieldBegin.first && cursorPos.second >= kSecondFieldBegin.second &&
             cursorPos.first < kSecondFieldEnd.first && cursorPos.second < kSecondFieldEnd.second)
     {
-        GameP->setUserShot({true, {(cursorPos.second - kSecondFieldBegin.second) / kMapSquareSide, (cursorPos.first - kSecondFieldBegin.first) / kMapSquareSide}});
+        GameR.setUserShot({true, {(cursorPos.second - kSecondFieldBegin.second) / kMapSquareSide, (cursorPos.first - kSecondFieldBegin.first) / kMapSquareSide}});
     }
-    if(GameP->move() && GameP->getFirstGamer()->getAffectedCells() == 22)
+    GameR.move();
+    QWidget::update();
+    if(GameR.getFirstGamer()->getAffectedCells() == 22)
     {
         QMessageBox::information(this, "Congratulations", "First Player wins");
         emit quitSignal();
     }
-    else if(GameP->getSecondGamer()->getAffectedCells() == 22)
+    else if(GameR.getSecondGamer()->getAffectedCells() == 22)
     {
         QMessageBox::information(this, "Congratulations", "Second Player wins");
         emit quitSignal();
     }
-    else if((!GameP->getNextSecond() && GameP->getGamerUserStatus(2)) && (GameP->getNextSecond() && GameP->getGamerUserStatus(1)))
+    else if((!GameR.getNextSecond() && GameR.getGamerUserStatus(2)) && (GameR.getNextSecond() && GameR.getGamerUserStatus(1)))
     {
         QMessageBox::information(this, "Swap", "Pass control to the next player");
     }
-    QWidget::update();
 }
 
