@@ -22,6 +22,8 @@ public:
 
     virtual ~GamerRandom();
 
+    bool getStatus() const override;
+
     int& getAffectedCells() override;
 
     std::vector<std::string>& getField() override;

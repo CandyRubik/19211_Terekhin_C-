@@ -14,6 +14,8 @@ public:
 
     virtual int& getAffectedCells() = 0;
 
+    virtual bool getStatus() const = 0;
+
     virtual ~GamerI() {}
 };
 

@@ -26,6 +26,8 @@ public:
 
     virtual ~GamerOptimal();
 
+    bool getStatus() const override;
+
     int& getAffectedCells() override;
 
     std::vector<std::string>& getField() override;
@@ -35,6 +37,7 @@ public:
     bool cruiserKillConfirmation(std::vector<std::string> field);
 
     bool finish(std::vector<std::pair<int, int>>::iterator it, std::vector<std::string> enemyField, int numberOfDecs);
+
 };
 
 #endif // GAMEROPTIMAL_H

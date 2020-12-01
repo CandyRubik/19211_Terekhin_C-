@@ -1,10 +1,6 @@
 #include "game.h"
-#include <QDir>
+#include "factory.h"
 
-
-inline constexpr std::uint32_t fnv1a(const char* str, std::uint32_t hash = 2166136261UL) {
-    return *str ? fnv1a(str + 1, (hash ^ *str) * 16777619ULL) : hash;
-}
 
 Game::Game()
 {
@@ -16,35 +12,19 @@ Game::Game()
         getline(file1, str);
     }
     file1.seekg(0);
-    switch (fnv1a(str.c_str())) {
-    case fnv1a("User"):
-        FirstGP = std::make_unique<GamerUser>(file1);
-        firstUserStatus = true;
-        break;
-    case fnv1a("Random strategy"):
-        FirstGP = std::make_unique<GamerRandom>(file1);
-        break;
-    case fnv1a("Optimal strategy"):
-        FirstGP = std::make_unique<GamerOptimal>(file1);
-        break;
-    }
+    FirstGP.reset(Factory<GamerI, std::string, GamerI* (*)(std::ifstream &file)>::instance().makeBlock(str, file1));
     for(int i = 0; i < 11; i++)
     {
         getline(file2, str);
     }
     file2.seekg(0);
-    switch (fnv1a(str.c_str())) {
-    case fnv1a("User"):
-       SecondGP = std::make_unique<GamerUser>(file2);
-       secondUserStatus = true;
-        break;
-    case fnv1a("Random strategy"):
-        SecondGP = std::make_unique<GamerRandom>(file2);
-        break;
-    case fnv1a("Optimal strategy"):
-        SecondGP = std::make_unique<GamerOptimal>(file2);
-        break;
-    }
+    SecondGP.reset(Factory<GamerI, std::string, GamerI* (*)(std::ifstream &file)>::instance().makeBlock(str, file2));
+    if(FirstGP->getStatus())
+        firstUserStatus = true;
+    if(SecondGP->getStatus())
+        secondUserStatus = true;
+    file1.close();
+    file2.close();
 }
 
 Game::~Game() {}

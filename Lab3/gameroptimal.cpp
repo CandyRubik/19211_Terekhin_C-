@@ -1,4 +1,17 @@
 #include "game.h"
+#include "factory.h"
+
+GamerI* createGamerOptimal(std::ifstream &file) {
+    return new GamerOptimal(file);
+}
+
+static bool add_creatorGamerOptimal()
+{
+    Factory<GamerI, std::string, GamerI* (*)(std::ifstream &file)>::instance().addCreator("Optimal strategy", createGamerOptimal);
+    return true;
+}
+static bool a = add_creatorGamerOptimal();
+
 
 GamerOptimal::GamerOptimal(std::ifstream &file) : GamerI()
 {
@@ -220,4 +233,9 @@ bool GamerOptimal::finish(std::vector<std::pair<int, int>>::iterator it, std::ve
         }
     }
     return generated;
+}
+
+bool GamerOptimal::getStatus() const
+{
+    return false;
 }

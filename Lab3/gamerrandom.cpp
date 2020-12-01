@@ -1,4 +1,16 @@
 #include "game.h"
+#include "factory.h"
+
+GamerI* createGamerRandom(std::ifstream &file) {
+    return new GamerRandom(file);
+}
+
+static bool add_creatorGamerRandom()
+{
+    Factory<GamerI, std::string, GamerI* (*)(std::ifstream &file)>::instance().addCreator("Random strategy", createGamerRandom);
+    return true;
+}
+static bool b = add_creatorGamerRandom();
 
 GamerRandom::GamerRandom(std::ifstream &file)
 {
@@ -52,4 +64,9 @@ int& GamerRandom::getAffectedCells()
 std::vector<std::string>& GamerRandom::getField()
 {
     return field;
+}
+
+bool GamerRandom::getStatus() const
+{
+    return false;
 }
