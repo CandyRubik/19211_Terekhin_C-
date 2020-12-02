@@ -15,7 +15,7 @@ static bool a = add_creatorGamerUser();
 GamerUser::GamerUser(std::ifstream &file) : GamerI()
 {
     std::string str;
-    for(int i = 0; i < 10; i++)
+    for(size_t i = 0; i < 10; i++)
     {
         getline(file, str);
         field.push_back(str + '\n');

@@ -15,7 +15,7 @@ static bool b = add_creatorGamerRandom();
 GamerRandom::GamerRandom(std::ifstream &file)
 {
     std::string str;
-    for(int i = 0; i < 10; i++)
+    for(size_t i = 0; i < 10; i++)
     {
         getline(file, str);
         field.push_back(str + '\n');

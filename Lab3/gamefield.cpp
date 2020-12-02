@@ -39,13 +39,13 @@ void GameField::paintEvent(QPaintEvent *)
         drawSecondGField();
         drawEnemyField();
     }
-    if(GameR.getNextSecond() && !GameR.getGamerUserStatus(1))
+    if(GameR.getNextSecond() && !GameR.getGamerUserStatus(1)) // PROBLEM PROBLEM WITH FIELD OF GAMER
     {
         std::pair<int, int> shotPos = GameR.getFirstGamer()->makeMove();
         QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonPress, QPoint(shotPos.first, shotPos.second), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
         mousePressEvent(event);
     }
-    else if(!GameR.getGamerUserStatus(2) && !GameR.getNextSecond())
+    else if(!GameR.getGamerUserStatus(2) && !GameR.getNextSecond()) // PROBLEM WITH FIELD OF GAMER
     {
         std::pair<int, int> shotPos = GameR.getSecondGamer()->makeMove();
         QMouseEvent *event = new QMouseEvent(QEvent::MouseButtonPress, QPoint(shotPos.first, shotPos.second), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
@@ -65,9 +65,9 @@ void GameField::drawEnemyField()
         field = GameR.getFirstGamer()->getField();
     }
 
-    for(int i = 0; i < 10; i++)
+    for(size_t i = 0; i < 10; i++)
     {
-        for(int j = 0; j < 10; j++)
+        for(size_t j = 0; j < 10; j++)
         {
             if(field[i][j] == '.')
             {
@@ -102,9 +102,9 @@ void GameField::drawAim()
 void GameField::drawFirstGField()
 {
     std::vector<std::string> field = GameR.getFirstGamer()->getField();
-    for(int i = 0; i < 10; i++)
+    for(size_t i = 0; i < 10; i++)
     {
-        for(int j = 0; j < 10; j++)
+        for(size_t j = 0; j < 10; j++)
         {
             if(field[i][j] == '*')
             {
@@ -133,9 +133,9 @@ void GameField::drawFirstGField()
 void GameField::drawSecondGField()
 {
     std::vector<std::string> field = GameR.getSecondGamer()->getField();
-    for(int i = 0; i < 10; i++)
+    for(size_t i = 0; i < 10; i++)
     {
-        for(int j = 0; j < 10; j++)
+        for(size_t j = 0; j < 10; j++)
         {
             if(field[i][j] == '*')
             {
@@ -167,14 +167,14 @@ void GameField::drawFields()
     painter.setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
     painter.setBrush(QBrush(Qt::white, Qt::SolidPattern));
     using namespace Sizes;
-    for (int i = kFirstFieldBegin.first; i < kFirstFieldEnd.first; i += kMapSquareSide)
-        for(int j = kFirstFieldBegin.second; j < kFirstFieldEnd.second; j += kMapSquareSide)
+    for (size_t i = kFirstFieldBegin.first; i < kFirstFieldEnd.first; i += kMapSquareSide)
+        for(size_t j = kFirstFieldBegin.second; j < kFirstFieldEnd.second; j += kMapSquareSide)
         {
             painter.drawRect(i, j, kMapSquareSide, kMapSquareSide);
         }
 
-    for (int i = kSecondFieldBegin.first; i < kSecondFieldEnd.first; i += kMapSquareSide)
-        for(int j = kSecondFieldBegin.second; j < kSecondFieldEnd.second; j += kMapSquareSide)
+    for (size_t i = kSecondFieldBegin.first; i < kSecondFieldEnd.first; i += kMapSquareSide)
+        for(size_t j = kSecondFieldBegin.second; j < kSecondFieldEnd.second; j += kMapSquareSide)
         {
             painter.drawRect(i, j, kMapSquareSide, kMapSquareSide);
         }

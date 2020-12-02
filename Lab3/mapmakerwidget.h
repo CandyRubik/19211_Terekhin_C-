@@ -36,7 +36,7 @@ public:
 
     std::vector<std::pair<std::pair<QPoint, std::string>, bool>>& getShipsStatus();
 
-    int getShipSize(std::vector<std::pair<std::pair<QPoint, std::string>, bool>>::iterator it);
+    size_t getShipSize(std::vector<std::pair<std::pair<QPoint, std::string>, bool>>::iterator it);
 
     void drawField();
 

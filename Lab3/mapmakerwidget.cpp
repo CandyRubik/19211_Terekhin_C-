@@ -18,7 +18,7 @@ mapWidget::mapWidget(QWidget *parent) : QWidget(parent)
 
 mapWidget::~mapWidget() {}
 
-int mapWidget::getShipSize(std::vector<std::pair<std::pair<QPoint, std::string>, bool>>::iterator it)
+size_t mapWidget::getShipSize(std::vector<std::pair<std::pair<QPoint, std::string>, bool>>::iterator it)
 {
     switch(std::distance(ships_status.begin(), it)) // getting index of vector and depends of them we install ship_size
     {
@@ -117,8 +117,8 @@ void mapWidget::drawField()
     QPainter painter(this);
     painter.setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
     painter.setBrush(QBrush(Qt::white, Qt::SolidPattern));
-    for (int i = 0; i < 10; i++)
-        for(int j = 0; j < 10; j++)
+    for (size_t i = 0; i < 10; i++)
+        for(size_t j = 0; j < 10; j++)
             painter.drawRect(i * Sizes::map_square_side, j * Sizes::map_square_side, Sizes::map_square_side, Sizes::map_square_side);
 }
 
@@ -127,17 +127,17 @@ void mapWidget::drawStableShip(std::vector<std::pair<std::pair<QPoint, std::stri
     QPainter shipPainter(this);
     shipPainter.setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
     shipPainter.setBrush(QBrush(Qt::red, Qt::SolidPattern));
-    int ship_size = getShipSize(it);
+    size_t ship_size = getShipSize(it);
     if(it->first.second == "vertical")  // ship should be drawn vertical
     {
-        for(int i = 0; i < ship_size; i++)
+        for(size_t i = 0; i < ship_size; i++)
         {
             shipPainter.drawRect(it->first.first.x() * Sizes::map_square_side, (it->first.first.y() + i) * Sizes::map_square_side, Sizes::map_square_side, Sizes::map_square_side);
         }
     }
     else    // ship should be drawn horizontal
     {
-        for(int i = 0; i < ship_size; i++)
+        for(size_t i = 0; i < ship_size; i++)
         {
             shipPainter.drawRect((it->first.first.x() + i) * Sizes::map_square_side, it->first.first.y() * Sizes::map_square_side, Sizes::map_square_side, Sizes::map_square_side);
         }
@@ -149,17 +149,17 @@ void mapWidget::drawUnstableShip(std::vector<std::pair<std::pair<QPoint, std::st
     QPainter shipPainter(this);
     shipPainter.setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
     shipPainter.setBrush(QBrush(Qt::red, Qt::SolidPattern));
-    int ship_size = getShipSize(it);
+    size_t ship_size = getShipSize(it);
     if(cntrl)  // ship should be drawn vertical
     {
-        for(int i = 0; i < ship_size; i++)
+        for(size_t i = 0; i < ship_size; i++)
         {
             shipPainter.drawRect((cursorPos.first + i) * Sizes::map_square_side, cursorPos.second * Sizes::map_square_side, Sizes::map_square_side, Sizes::map_square_side);
         }
     }
     else    // ship should be drawn horizontal
     {
-        for(int i = 0; i < ship_size; i++)
+        for(size_t i = 0; i < ship_size; i++)
         {
             shipPainter.drawRect(cursorPos.first * Sizes::map_square_side, (cursorPos.second + i) * Sizes::map_square_side, Sizes::map_square_side, Sizes::map_square_side);
         }

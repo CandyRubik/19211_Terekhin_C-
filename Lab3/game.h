@@ -39,7 +39,7 @@ public:
 
     bool getGamerUserStatus(int x) const;
 
-    friend class GamerUser;
+    friend std::pair<int, int> GamerUser::makeMove();
     friend std::pair<int, int> GamerOptimal::makeMove();
     friend std::pair<int, int> GamerRandom::makeMove();
 private:

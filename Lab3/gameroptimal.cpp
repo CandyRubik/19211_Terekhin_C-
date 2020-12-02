@@ -16,7 +16,7 @@ static bool a = add_creatorGamerOptimal();
 GamerOptimal::GamerOptimal(std::ifstream &file) : GamerI()
 {
     std::string str;
-    for(int i = 0; i < 10; i++)
+    for(size_t i = 0; i < 10; i++)
     {
         getline(file, str);
         field.push_back(str + '\n');
@@ -112,8 +112,8 @@ std::vector<std::string>& GamerOptimal::getField()
 
 bool GamerOptimal::battleshipKillConfirmation(std::vector<std::string> field)
 {
-    for(int i = 0; i < 10; i++)
-        for(int j = 0; j < 7; j++)
+    for(size_t i = 0; i < 10; i++)
+        for(size_t j = 0; j < 7; j++)
         {
             if(field[i][j] == 'X' && field[i][j + 1] == 'X' && field[i][j + 2] == 'X' && field[i][j + 3] == 'X')
             {
@@ -132,8 +132,8 @@ bool GamerOptimal::battleshipKillConfirmation(std::vector<std::string> field)
 bool GamerOptimal::cruiserKillConfirmation(std::vector<std::string> field)
 {
     int count = 0;
-    for(int i = 0; i < 10; i++)
-        for(int j = 0; j < 8; j++)
+    for(size_t i = 0; i < 10; i++)
+        for(size_t j = 0; j < 8; j++)
         {
             if(field[i][j] == 'X' && field[i][j + 1] == 'X' && field[i][j + 2] == 'X')
             {
